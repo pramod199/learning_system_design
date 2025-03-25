@@ -1,0 +1,7 @@
+Problem:
+if you want to copy the object but some fields are private
+
+you have interface and not aware of concrete object type then how will you instantiate it.
+
+prototype design pattern delegates the object duplication or cloning process to the
+actual object that are being cloned without coupling the creation of object to its class.

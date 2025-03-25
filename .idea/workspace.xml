@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2ae98655-4481-4983-8551-7f1fd1b20a5b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/design_patterns.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Account.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UiControl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/behavioural/strategy/fix/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/behavioural/strategy/fix/PaymentByCreditCard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/behavioural/strategy/fix/PaymentByPayPal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/behavioural/strategy/fix/PaymentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/behavioural/strategy/fix/PaymentStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/behavioural/strategy/issue/CreditCard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/behavioural/strategy/issue/PaymentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/builder/Car.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/builder/CarBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/builder/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/builder/Director.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/AlooPattyBurger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/Burger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/PizzaBurger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/Restaurants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/SimpleBurgerFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/AsusGpu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/AsusManufacturer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/Company.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/Gpu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/MsiGpu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/MsiManufacturer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/gpu_and_monitor/using_abstract_factory/AsusGpu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/gpu_and_monitor/using_abstract_factory/AsusManufacturer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/gpu_and_monitor/using_abstract_factory/AsusMonitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/gpu_and_monitor/using_abstract_factory/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/gpu_and_monitor/using_abstract_factory/Company.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/gpu_and_monitor/using_abstract_factory/Gpu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/gpu_and_monitor/using_abstract_factory/Monitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/gpu_and_monitor/using_abstract_factory/MsiGpu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/gpu_and_monitor/using_abstract_factory/MsiManufacturer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/gpu_and_monitor/using_abstract_factory/MsiMonitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/gpu_and_monitor/using_factory_method/AsusGpu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/gpu_and_monitor/using_factory_method/AsusMonitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/gpu_and_monitor/using_factory_method/Company.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/gpu_and_monitor/using_factory_method/Component.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/gpu_and_monitor/using_factory_method/MsiGpu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/gpu_and_monitor/using_factory_method/MsiManufacturer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/abstract_fatory/gpu_and_monitor/using_factory_method/MsiMonitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/factory_method/AaluBurgerRestaurant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/factory_method/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/factory_method/PizzaBurgerRestaurant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/factory/factory_method/Restaurant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/prototype/Bus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/prototype/Car.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/prototype/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/prototype/Prototype.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/prototype/Vehicle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/prototype/prototype.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/creational/singleton/Singleton.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/decorator_design_pattern/BasePizza.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/decorator_design_pattern/FarmHouse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/decorator_design_pattern/Margherita.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/decorator_design_pattern/PizzaShop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/decorator_design_pattern/VegDelight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/decorator_design_pattern/decorator/ExtraCheeseDecorator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/decorator_design_pattern/decorator/MushroomDecorator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/decorator_design_pattern/decorator/ToppingDecorator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/factory_design_pattern/factory/Circle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/factory_design_pattern/factory/MainClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/factory_design_pattern/factory/Rectangle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/factory_design_pattern/factory/Shape.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/factory_design_pattern/factory/ShapeFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/observer_design_pattern/Store.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/observer_design_pattern/observable/IphoneObservableImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/observer_design_pattern/observable/StockObservable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/observer_design_pattern/observer/EmailAlertObserverImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/observer_design_pattern/observer/MobileAlertObserverImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/observer_design_pattern/observer/NotificationAlertObserver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/dependency_inversion/KeyBoard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/dependency_inversion/Macbook.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/dependency_inversion/Mouse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/dependency_inversion/WiredKeyBoard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/dependency_inversion/WiredMouse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/dependency_inversion/fix/Macbook.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/interface_segmented/fix/ChefInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/interface_segmented/fix/Waiter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/interface_segmented/fix/WaiterInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/interface_segmented/violation/RestaurantEmployee.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/interface_segmented/violation/Waiter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/liscov_substitution/Bicycle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/liscov_substitution/Bike.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/liscov_substitution/Motorcycle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/liscov_substitution/another_example/fix/Bicycle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/liscov_substitution/another_example/fix/Car.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/liscov_substitution/another_example/fix/EngineVehicle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/liscov_substitution/another_example/fix/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/liscov_substitution/another_example/fix/MotorCycle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/liscov_substitution/another_example/fix/Vehicle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/liscov_substitution/another_example/problem/Bicycle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/liscov_substitution/another_example/problem/Car.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/liscov_substitution/another_example/problem/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/liscov_substitution/another_example/problem/MotorCycle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/liscov_substitution/another_example/problem/Vehicle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/open_closed/InvoiceDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/open_closed/fix/DatabaseInvoiceDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/open_closed/fix/FileInvoiceDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/open_closed/fix/InvoiceDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/single_responsibility/fix/Invoice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/single_responsibility/fix/InvoiceDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/single_responsibility/fix/InvoicePrinter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/single_responsibility/fix/Marker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/single_responsibility/violation/Invoice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/solid_principles/single_responsibility/violation/Marker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/strategy_design_pattern/with/GoodsVehicle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/strategy_design_pattern/with/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/strategy_design_pattern/with/SportsVehicle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/strategy_design_pattern/with/Vehicle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/strategy_design_pattern/with/strategy/DriveStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/strategy_design_pattern/with/strategy/NormalDriveStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/strategy_design_pattern/with/strategy/SportsDriveStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/strategy_design_pattern/without/GoodsVehicle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/strategy_design_pattern/without/OffRoadVehicle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/strategy_design_pattern/without/PassengerVehicle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/strategy_design_pattern/without/SportsVehicle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lld/strategy_design_pattern/without/Vehicle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/memento/Editor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/memento/EditorState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/memento/History.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/state/Canvas.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/state/ToolType.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2s7bbWkJDatCQKe24L7Xtf28mIW" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Application.PizzaShop.executor": "Debug",
+    "Application.Store.executor": "Run",
+    "Application.behavioural.strategy.fix.Main.executor": "Run",
+    "Application.main.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "/Users/pramodkumar/src/design_pattern_by_mosh/design_patterns",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.github.copilot.settings.ApplicationConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "TEXT"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="behavioural.strategy.fix" />
+      <recent name="behavioural.strategy" />
+      <recent name="lld.factory_design_pattern" />
+      <recent name="lld.decorator_design_pattern" />
+      <recent name="lld.observer_design_pattern.observer" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/factory/abstract_fatory/gpu_and_monitor/using_abstract_factory" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/creational/prototype" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="behavioural.strategy.issue" />
+      <recent name="lld.strategy_design_pattern.with" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="lld.strategy_design_pattern.without" />
+      <recent name="lld.solid_principles.liscov_substitution.another_example.fix" />
+      <recent name="lld.solid_principles.dependency_inversion.fix" />
+      <recent name="lld.solid_principles.open_closed" />
+      <recent name="lld.solid_principles.single_responsibility.fix" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.behavioural.strategy.fix.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="lld.strategy_design_pattern.with.Main" />
+      <module name="design_patterns" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="lld.strategy_design_pattern.with.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PizzaShop" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="lld.decorator_design_pattern.PizzaShop" />
+      <module name="design_patterns" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="lld.decorator_design_pattern.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Store" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="lld.observer_design_pattern.Store" />
+      <module name="design_patterns" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="lld.observer_design_pattern.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="behavioural.strategy.fix.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="behavioural.strategy.fix.Main" />
+      <module name="design_patterns" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="behavioural.strategy.fix.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main" />
+      <module name="design_patterns" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.behavioural.strategy.fix.Main" />
+        <item itemvalue="Application.PizzaShop" />
+        <item itemvalue="Application.Store" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2ae98655-4481-4983-8551-7f1fd1b20a5b" name="Changes" comment="" />
+      <created>1737809634697</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1737809634697</updated>
+      <workItem from="1737809636793" duration="5957000" />
+      <workItem from="1737951621823" duration="470000" />
+      <workItem from="1738396480930" duration="1377000" />
+      <workItem from="1739593773949" duration="2167000" />
+      <workItem from="1740149693178" duration="15001000" />
+      <workItem from="1742438916676" duration="6956000" />
+      <workItem from="1742579267741" duration="12643000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/lld/decorator_design_pattern/decorator/MushroomDecorator.java</url>
+          <line>11</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/lld/decorator_design_pattern/decorator/ExtraCheeseDecorator.java</url>
+          <line>14</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/lld/decorator_design_pattern/Margherita.java</url>
+          <line>5</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
