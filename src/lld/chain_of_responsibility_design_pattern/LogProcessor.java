@@ -14,7 +14,7 @@ public abstract class LogProcessor {
     public void processLog(int loglevel, String message) {
         if (nextProcessor != null) {
             nextProcessor.processLog(loglevel, message);
-        }else {
+        } else {
             System.out.println("No processor found for loglevel: " + loglevel);
         }
     }
