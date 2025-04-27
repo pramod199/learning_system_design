@@ -1,0 +1,13 @@
+package lld.DesignUberOla;
+
+public enum TRIP_STATUS {
+    PENDING,
+    IN_PROGRESS,
+    COMPLETED,
+    CANCELLED,
+    NO_SHOW,
+    DRIVER_ASSIGNED,
+    DRIVER_ARRIVED,
+    RIDER_PICKED_UP,
+    RIDER_DROPPED_OFF
+}

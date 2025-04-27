@@ -20,14 +20,14 @@ public class BalanceSheetController {
             if (expensePaidBy.getUserId().equals(userOwe.getUserId())) {
                 paidByUserExpenseSheet.setTotalYourExpense(paidByUserExpenseSheet.getTotalYourExpense() + oweAmount);
             } else {
-                // update balance of paid userOwe
+                // update balance of paid user
                 paidByUserExpenseSheet.setTotalYouGetBack(paidByUserExpenseSheet.getTotalYouGetBack() + oweAmount);
 
                 Balance userOweBalance = getBalanceFromMap(paidByUserExpenseSheet.getUserVsBalance(), userOwe.getUserId());
 
                 userOweBalance.setAmountGetBack(userOweBalance.getAmountGetBack() + oweAmount);
 
-                //update the balance sheet of owe userOwe
+                //update the balance sheet of owe user
                 oweUserExpenseSheet.setTotalYouOwe(oweUserExpenseSheet.getTotalYouOwe() + oweAmount);
                 oweUserExpenseSheet.setTotalYourExpense(oweUserExpenseSheet.getTotalYourExpense() + oweAmount);
 
