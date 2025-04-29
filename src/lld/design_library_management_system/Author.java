@@ -4,4 +4,8 @@ import java.util.List;
 
 public class Author extends Person {
     List<Book> listOfBooksPublished; // to help list down all books of particular author
+
+    public Author(String name) {
+        this.name = name;
+    }
 }

@@ -7,19 +7,18 @@ import java.util.List;
 
 public class Search {
     public List<BookItem> getBookByTitle(String title) {
-        return new ArrayList<>();
+        return Database.searchByTitle(title);
     }
 
     public List<BookItem> getBookByAuthor(Author author) {
-        return new ArrayList<>();
+        return Database.searchByAuthor(author);
     }
 
     public List<BookItem> getBookByType(BookType bookType) {
-        return new ArrayList<>();
+        return Database.searchByType(bookType);
     }
 
     public List<BookItem> getBookBySubject(String subject) {
-        return new ArrayList<>();
+        return Database.searchBySubject(subject);
     }
-
 }
