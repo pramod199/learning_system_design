@@ -11,5 +11,14 @@ public class Show {
     int startTime;
     List<Integer> bookedSeatIds = new ArrayList<>();
 
-
+    public boolean bookSeat(int seatNumber) {
+        if(!this.bookedSeatIds.contains(seatNumber)){
+            this.bookedSeatIds.add(seatNumber);
+            System.out.println("Seat booked successfully");
+            return true;
+        } else{
+            System.out.println("Seat already booked");
+            return false;
+        }
+    }
 }

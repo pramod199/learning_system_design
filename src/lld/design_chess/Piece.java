@@ -1,9 +1,9 @@
 package lld.design_chess;
 
 public abstract class Piece {
-    String color;
+    PieceColor color;
 
-    public Piece(String color) {
+    public Piece(PieceColor color) {
         this.color = color;
     }
 

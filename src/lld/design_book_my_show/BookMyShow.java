@@ -8,7 +8,7 @@ public class BookMyShow {
     MovieController movieController;
     TheatreController theatreController;
 
-    public  BookMyShow() {
+    public BookMyShow() {
         movieController = new MovieController();
         theatreController = new TheatreController();
     }
@@ -29,14 +29,14 @@ public class BookMyShow {
 
         // 2. select movie which you want to see
         Movie interestedMovie = null;
-        for(Movie movie : moviesByCity) {
-            if(movie.movieName.equals(movieName)) {
+        for (Movie movie : moviesByCity) {
+            if (movie.movieName.equals(movieName)) {
                 interestedMovie = movie;
                 break;
             }
         }
 
-        if (interestedMovie == null){
+        if (interestedMovie == null) {
             System.out.println("Movie not found: " + movieName);
             return;
         }
@@ -52,7 +52,7 @@ public class BookMyShow {
 
         // 5. user select seats
         int seatNumber = 30;
-        boolean isBooked = bookSeat(interestedShow, seatNumber);
+        boolean isBooked = interestedShow.bookSeat(seatNumber);
         if (isBooked) {
             // start Payment
             Booking booking = new Booking();
@@ -72,16 +72,6 @@ public class BookMyShow {
 
     }
 
-    private boolean bookSeat(Show interestedShow, int seatNumber) {
-        if(!interestedShow.bookedSeatIds.contains(seatNumber)){
-            interestedShow.bookedSeatIds.add(seatNumber);
-            System.out.println("Seat booked successfully");
-            return true;
-        } else{
-            System.out.println("Seat already booked");
-            return false;
-        }
-    }
 
     private void initialize() {
         // create movies
@@ -118,7 +108,7 @@ public class BookMyShow {
     private List<Show> createShows(Movie movie, List<Screen> screens, int timing) {
         List<Show> shows = new ArrayList<>();
         int showId = 1;
-        for(Screen screen : screens) {
+        for (Screen screen : screens) {
             Show show = createShow(showId, movie, screen, timing);
             showId++;
             shows.add(show);
@@ -149,8 +139,6 @@ public class BookMyShow {
         screens.add(screen2);
         return screens;
     }
-
-
 
 
     private List<Seat> createSeats(int totalSeat) { // not using total seat but can be used for dynamic seat
@@ -195,8 +183,8 @@ public class BookMyShow {
         baahubali.movieName = "Baahubali";
         baahubali.movieDurationInMinutes = 200;
 
-        movieController.addMovie(avengers,  City.Bangalore);
-        movieController.addMovie(avengers,  City.Delhi);
+        movieController.addMovie(avengers, City.Bangalore);
+        movieController.addMovie(avengers, City.Delhi);
         movieController.addMovie(baahubali, City.Bangalore);
         movieController.addMovie(baahubali, City.Delhi);
 
