@@ -1,0 +1,178 @@
+Design a Document Upload Service that allows users to upload, retrieve, delete, and list their documents in a cloud storage solution. Define the database schema for your service. Include tables for storing user information, document metadata, and any other necessary data. Consider relationships between tables and indexing for efficient data retrieval.
+
+
+Design a class diagram to represent the core components of your service, including:
+
+Models for Document and User.
+Service classes for handling business logic related to document management.
+Repository classes for database interactions.
+Controllers for handling API requests.
+
+
+Design RESTful APIs for the following operations:
+
+Upload Document: Allow users to upload documents. Each document can include metadata such as title, description, and tags.
+Retrieve Document: Enable users to download a document using a unique identifier.
+Delete Document: Permit users to delete a document.
+List Documents: Allow users to list their uploaded documents with pagination support. Provide filtering options based on metadata.
+Include rate limiting and authentication mechanisms to secure access to the APIs.
+
+
+User {
+    id: UUID
+    name: String
+    email: String
+    password: String
+    created_at: Timestamp
+}
+
+Document {
+    id: UUID
+    user_id: UUID
+    title: String
+    description: String
+    file_path: String not null
+    content_type: String // e.g., application/pdf
+    created_at: Timestamp
+    updated_at: Timestamp
+}
+
+document_tags {
+    id: UUID
+    document_id: UUID
+    tag: String
+}
+
+APIs
+1. upload document:
+
+
+POST /api/documents/upload
+Headers: Authorization: Bearer <token>
+Request Body: form-data
+{
+    "title": "Document Title",
+    "description": "Document Description",
+    "tags": ["tag1", "tag2"],
+    "file": <binary file>
+}
+
+Response:
+{
+    "status": "success",
+    "document_id": "UUID"
+}
+
+
+2. Retrieve document:
+
+GET /api/documents/{document_id}
+Headers: Authorization: Bearer <token>
+Response:
+{
+    "status": "success",
+    "document": {
+        "id": "UUID",
+        "title": "Document Title",
+        "description": "Document Description",
+        "file_path": "<URL to download>",
+        "content_type": "application/pdf",
+        "created_at": "Timestamp"
+    }
+}
+
+3. Delete document:
+DELETE /api/documents/{document_id}
+Headers: Authorization: Bearer <token>
+Response:
+{
+    "status": "success",
+    "message": "Document deleted successfully"
+}
+
+4. List documents:
+
+GET /api/documents
+Headers: Authorization: Bearer <token>
+
+Query Parameters:
+    page: Integer (default: 1)
+    limit: Integer (default: 10)
+    filter: String (optional, e.g., "tag=tag1")
+
+Response:
+{
+    "status": "success",
+    "documents": [
+        {
+            "id": "UUID",
+            "title": "Document Title",
+            "description": "Document Description",
+            "file_path": "<URL to download>",
+            "content_type": "application/pdf",
+            "created_at": "Timestamp"
+        },
+        ...
+    ],
+    "pagination": {
+        "page": 1,
+        "page_size": 10,
+        "total_pages": 3
+    }
+}
+
+
+Class Diagram:
+
++----------------+
+|     User       |
++----------------+
+| - id: UUID     |
+| - name: String |
+| - email: String|
+| - passwordHash:String |
++----------------+
+
++-----------------------------+
+|         Document            |
++-----------------------------+
+| - id: UUID                  |
+| - userId: UUID              |
+| - title: String             |
+| - description: String       |
+| - filePath: String          |
+| - contentType: String       |
+| - createdAt: Timestamp      |
+| - updatedAt: Timestamp      |
+| - tags: List<String>        |
++-----------------------------+
+
+Association:
+User 1 --- * Document
+
++--------------------------------------------------+
+|               DocumentService                    |
++--------------------------------------------------+
+| + upload(user: User, file, metadata): Document   |
+| + retrieve(user: User, documentId: UUID): File   |
+| + delete(user: User, documentId: UUID): void     |
+| + list(user: User, filters): List<Document>      |
++--------------------------------------------------+
+
++---------------------------------------------------------------------+
+|                        DocumentRepository                           |
++---------------------------------------------------------------------+
+| + save(document: Document): void                                    |
+| + findByIdAndUserId(documentId: UUID, userId: UUID): Document?      |
+| + delete(documentId: UUID): void                                    |
+| + findAllByUserId(userId: UUID, filters): List<Document>           |
++---------------------------------------------------------------------+
+
++------------------------------------------------------------+
+|                 DocumentController                         |
++------------------------------------------------------------+
+| + uploadDocument(request): ResponseEntity                  |
+| + getDocument(id: UUID): ResponseEntity                    |
+| + deleteDocument(id: UUID): ResponseEntity                 |
+| + listDocuments(filters): ResponseEntity                   |
++------------------------------------------------------------+

@@ -1,0 +1,212 @@
+question:
+1. Who are the users of this system? only supplier
+2. Is this a standalone supplier system or integrated into a broader marketplace? asume broader market, but give design for standalone supplier system
+3. What actions can a supplier perform? CRUD for products, set inventory
+4. Are suppliers responsible for order fulfillment (shipping), or is it handled by the platform? -> supplier don't handle it, platform handles and out of scope for this question.
+
+Db schema:
+Supplier
+Category
+Product
+ProductVariant (for size/color variations)
+Inventory
+ProductImage (optional but common)
+
+
+Supplier {
+    id: string,
+    name: string,
+    email: string,
+    phone: string,
+    address: string,
+    createdAt: date,
+    updatedAt: date
+}
+
+Category {
+    id: string,
+    name: string,
+    parentId: string, // for subcategories
+    createdAt: date,
+    updatedAt: date
+}
+
+Product {
+    id: string,
+    name: string,
+    description: string,
+    price: decimal, // base price
+    categoryId: string, // foreign key to Category
+    supplierId: string, // foreign key to Supplier
+    createdAt: date,
+    updatedAt: date
+}
+
+ProductVariant {
+    id: string,
+    productId: string, // foreign key to Product
+    name: string, // e.g., "Large", "Small"
+    sku: string, //unique, stock keeping unit
+    price: decimal, // variant price
+    attributes: json, // e.g., {"color": "red", "size": "L"}
+    createdAt: date,
+    updatedAt: date
+}
+
+Inventory {
+    id: string,
+    variantId: string, // foreign key to ProductVariant
+    quantity: integer, // available stock
+    createdAt: date,
+    updatedAt: date
+}
+
+RelationShip:
+A Supplier can have many Products
+A Product belongs to one Category
+A Product has many Variants
+A Variant has one Inventory record
+Categories can be nested via parent_id
+
+API Design:
+Create Product
+POST /api/products
+Request Body:
+{
+    "name": "Product Name",
+    "description": "Product Description",
+    "price": 100.00,
+    "categoryId": "category_id",
+    "supplierId": "supplier_id"
+}
+
+Response:
+{
+    "productId": "new_product_id",
+    "message": "Product created successfully"
+}
+
+PUT /api/products/{productId}
+Request Body:
+{
+    "name": "Updated Product Name",
+    "description": "Updated Product Description",
+    "price": 120.00,
+    "categoryId": "new_category_id"
+}
+
+Response:
+{
+    "message": "Product updated successfully"
+}
+
+DELETE /api/products/{productId}
+
+GET /api/products/{productId}
+
+GET /api/products?page=1&limit=20&category_id=123
+
+2. Product Variant APIs
+
+POST /api/products/{productId}/variants
+Request Body:
+{
+    "name": "Large",
+    "sku": "SKU123",
+    "price": 120.00,
+    "attributes": {
+        "color": "red",
+        "size": "L"
+    }
+}
+
+PUT /api/variants/{variantId}
+
+DELETE /api/variants/{variantId}
+
+GET /api/variants/{variantId}
+
+ 3. Inventory APIs
+
+PUT /api/variants/{variantId}/inventory
+
+Request Body:
+{
+    "quantity": 50
+}
+
+GET /api/variants/{variantId}/inventory
+
+POST /api/category
+Request Body:
+{
+    "name": "Electronics",
+    "parentId": null // for top-level categories
+}
+
+GET /api/categories -> used by admin
+
+-------******---------
+
+class Supplier {
+    UUID id;
+    String name;
+    String email;
+    String passwordHash;
+    LocalDateTime createdAt;
+
+    // Associations
+    List<Product> products;
+}
+
+class Category {
+    UUID id;
+    String name;
+    Category parent; // self-referencing for hierarchy
+    LocalDateTime createdAt;
+
+    // Associations
+    List<Category> subcategories;
+}
+
+
+class Product {
+    UUID id;
+    String name;
+    String description;
+    BigDecimal price;
+    LocalDateTime createdAt;
+    LocalDateTime updatedAt;
+
+    // Foreign Keys
+    Supplier supplier;
+    Category category;
+
+    // Associations
+    List<ProductVariant> variants;
+}
+
+class ProductVariant {
+    UUID id;
+    String name;
+    String sku;
+    BigDecimal priceOverride;  // nullable
+    Map<String, String> attributes;  // e.g., {"color":"Red","size":"XL"}
+    LocalDateTime createdAt;
+
+    // Foreign Key
+    Product product;
+
+    // Associations
+    Inventory inventory;
+}
+
+class Inventory {
+    UUID id;
+    int quantity;
+    LocalDateTime lastUpdated;
+
+    // Foreign Key
+    ProductVariant variant;
+}
+

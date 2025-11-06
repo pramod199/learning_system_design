@@ -1,0 +1,223 @@
+Hotel reservation platform with multiple hotel providers.
+
+1. who are the users of this platform? (e.g., customers, hotel providers, admins)
+2. Do hotel providers manage their listings via our platform or via an external API? our platform.
+3. Should the platform support room-level availability and pricing per night? yes
+4. What kind of search and filters should be supported? (e.g., location, price range, amenities, star rating)
+    -> location and price range for now, but should be extensible
+5. How will be the payment -> can be cash, card,upi
+6. room can be of different type.
+7. concurrency handling needed.
+
+
+DB schema:
+user {
+    id: string,
+    name: string,
+    email: string,
+    phone: string,
+    address: string,
+    user_type: enum('customer', 'hotel_provider', 'admin'),
+    createdAt: date,
+    updatedAt: date
+}
+
+hotels {
+    id: string,
+    name: string,
+    address: string,
+    phone: string,
+    email: string,
+    providerId: string, // foreign key to user
+    createdAt: date,
+    updatedAt: date
+}
+
+room_type {
+    id (PK)
+    hotel_id (FK → hotels.id)
+    name (e.g., Deluxe, Standard)
+    description
+    capacity
+    default_price
+    amenities (JSON or separate table)
+    created_at
+}
+
+room {
+    id (PK)
+    room_type_id (FK → room_type.id)
+    number (e.g., 101, 102)
+    created_at
+}
+
+room_price {
+    id (PK)
+    room_id (FK → room.id)
+    start_date
+    end_date
+    price
+    created_at
+}
+
+booking {
+    id (PK)
+    user_id (FK → user.id)
+    room_id (FK → room.id)
+    start_date
+    end_date
+    status (e.g., booked, cancelled, completed),
+    total_price,
+    created_at
+}
+
+room availability sql:
+SELECT * FROM bookings
+WHERE room_id = :roomId
+  AND status = 'CONFIRMED'
+  AND (
+    check_in_date < :checkOutDate
+    AND check_out_date > :checkInDate
+  );
+
+
+API Design:
+1. hotel provider:
+POST   /hotels                         # Create new hotel
+GET    /hotels/{id}                    # Get hotel details
+POST   /hotels/{id}/room-types         # Add room type
+POST   /room-types/{id}/rooms          # Add individual room
+POST   /room-types/{id}/prices         # Set per-night pricing
+
+customer booking and search:
+
+GET    /search?location=bangalore&minPrice=500&maxPrice=2000
+POST   /bookings                       # Book a room
+{
+  "user_id": 201,
+  "room_id": 301,
+  "check_in_date": "2024-06-10",
+  "check_out_date": "2024-06-12",
+  "payment_method": "CARD"
+}
+
+GET    /bookings/{id}                 # Booking status
+
+POST   /bookings/{id}/cancel          # Cancel booking
+{
+  "booking_id": 9001,
+  "status": "CANCELLED",
+  "message": "Your booking has been successfully cancelled."
+}
+
++---------------------+
+|        User         |
++---------------------+
+| id                  |
+| name                |
+| email               |
+| phone               |
+| userType            |  --> Enum { CUSTOMER, PROVIDER, ADMIN }
++---------------------+
+
+          ▲
+          |
+          |
++---------------------+            +---------------------+
+|      Customer       |            |      Provider       |
++---------------------+            +---------------------+
+
++---------------------+
+|       Hotel         |
++---------------------+
+| id                  |
+| name                |
+| address             |
+| location            |
+| provider: Provider  |
++---------------------+
+| +getAvailableRooms()|
++---------------------+
+
+          |
+          |
+          ▼
+
++---------------------+
+|     RoomType        |
++---------------------+
+| id                  |
+| name                |
+| description         |
+| capacity            |
+| defaultPrice        |
+| hotel: Hotel        |
++---------------------+
+| +getPrice(date)     |
++---------------------+
+
+          |
+          |
+          ▼
+
++---------------------+
+|       Room          |
++---------------------+
+| id                  |
+| roomNumber          |
+| roomType: RoomType  |
++---------------------+
+
++---------------------+
+|    RoomPrice        |
++---------------------+
+| id                  |
+| date                |
+| price               |
+| roomType: RoomType  |
++---------------------+
+
++---------------------+
+|      Booking        |
++---------------------+
+| id                  |
+| customer: Customer  |
+| room: Room          |
+| checkInDate         |
+| checkOutDate        |
+| totalPrice          |
+| status              | --> Enum { CONFIRMED, CANCELLED }
+| paymentMethod       | --> Strategy Pattern
++---------------------+
+
++---------------------------+
+|   PaymentMethod (interface)|
++---------------------------+
+| +processPayment()         |
++---------------------------+
+        ▲      ▲      ▲
+        |      |      |
++--------+ +--------+ +--------+
+|  Card  | |  UPI   | |  Cash  |
++--------+ +--------+ +--------+
+
++----------------------------+
+|   SearchService            |
++----------------------------+
+| +searchRooms(filters...)   |
++----------------------------+
+
++----------------------------+
+|   BookingService           |
++----------------------------+
+| +createBooking(...)        |
+| +cancelBooking(...)        |
+| +checkAvailability(...)    |
++----------------------------+
+
++----------------------------+
+|   LockManager (Singleton)  |
++----------------------------+
+| +acquireLock(room, dates)  |
+| +releaseLock(...)          |
++----------------------------+

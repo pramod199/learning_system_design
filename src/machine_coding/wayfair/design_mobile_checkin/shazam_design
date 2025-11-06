@@ -1,0 +1,70 @@
+Functional Requirements:
+1. Identify songs from short audio snippets.
+2. Ingest new songs into the system in batch
+3. Handle peak traffic (esp. weekends).
+
+Non-Functional Requirements
+1. Scalability: Should handle millions of concurrent audio fingerprint queries.
+2. Low Latency: Matching should happen in <1s ideally.
+3. High Availability: System should be up 99.99% of the time.
+4. Consistency: Strong consistency for user data; eventual consistency for song metadata.y
+5. Observability: System must be fully observable with alerts and dashboards.
+
+
+POST /api/match-song
+Request:
+{
+  "user_id": "abc123",
+  "audio_clip": "<base64-encoded-clip>"
+}
+
+Response:
+{
+  "song_id": "xyz789",
+  "title": "Blinding Lights",
+  "artist": "The Weeknd",
+  "confidence": 0.92
+}
+
+POST /api/ingest-song
+Request:
+{
+  "admin_id": "admin1",
+  "title": "New Song",
+  "artist": "New Artist",
+  "audio_file": "<base64>"
+}
+
+Response:
+{
+  "song_id": "abc456",
+  "status": "success"
+}
+
+DB Schema:
+SongMetadata
+{
+  "song_id": "abc456",
+  "title": "New Song",
+  "artist": "New Artist",
+  "ingest_time": "2023-10-01T12:00:00Z"
+}
+
+SongDB : mongo db
+{
+  "song_id": "abc456",
+  "fingerprint": "<binary>"
+}
+
+SongInvertedIndex : use rockDb with redis
+{
+  "fingerprint": "<binary>",
+    List<"song_id">: list<"abc456", "xyz789">,
+}
+
+Metrics:
+prometheus + graphana: metric collection + dashboard
+elastic +kibana: log collection + dashboard
+new relic/ opentelemetry: application performance monitoring/ observability
+Pagerduty: alerting
+

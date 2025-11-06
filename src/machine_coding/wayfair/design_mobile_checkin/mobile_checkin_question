@@ -1,0 +1,150 @@
+SWE_System_Design_Mobile_Chein_Question.java
+Mobile Check-In
+We want to build an application that will enable users to "check-in" to places (businesses such as restaurants, points of interest) they visit.
+ "Check-in" involves recording the location they are at along with other information such as a star rating for that location.
+ The system recommends nearby locations/points of interest using their current location when the user opens the app.
+  Users will be able to select the place of interest they are in and "check in".
+
+A. The system must be able to accept locations along with metadata about the location in large batches to build the repository of points of interests.
+Metadata includes categories such as restaurants, cafes, parks, theaters, along with hours/address/contact info etc.
+The system should also support internal reports such as:
+1. Top N categories with the highest number of check-ins for each day/week/month
+2. Within a category, places of interests with the highest number of check-ins for each day/week/month
+3. Within a category, places of interests with the best user rating
+4. Users should be able to review their location history and view details such as their rating,
+    how long they spent at the location and how often they visited the location.
+
+Once we get the basic functionality working, we will add additional capability such as sponsored locations.
+
+Step 1: Requirements
+Functional Requirements:
+A. User Operations
+   1. Search nearby places using current GPS location.
+   2. View metadata for a place (category, contact, hours, etc.).
+   3. Check-in to a selected place with:
+        Star rating
+        Optional comment
+        Time spent (captured or entered)
+   4. View personal location history:
+        Past places visited
+        Ratings, duration, visit count
+
+B. Location Ingestion
+    1. Support batch ingestion of places (up to millions):
+        With metadata: name, type/category, coordinates, hours, contact info, etc.
+
+C. Recommendation
+    1. Suggest nearby places when user opens the app.
+    2. Personalize based on user history, preferences (can be added later).
+
+D. Reports
+    1. Top N categories by check-ins per day/week/month.
+    2. Top N places by check-ins in each category per period.
+    3. Best-rated places per category.
+
+E. Extensibility
+    1. Ability to support sponsored places and promotional placements in future.
+
+
+Non-Functional Requirements (NFRs)
+
+1. Availability
+2. Scalability
+3. Latency
+4. Consistency: Strong consistency for personal data (e.g., location history); eventual consistency fine for analytics and search.
+
+Step 2: Back-of-the-Envelope Estimations
+
+Let’s break down based on your assumptions:
+    200M Places
+    100M DAUs
+    Min 5 operations per user per day (check-ins, search, rating, history, etc.)
+
+1. peak checkin
+ 100Mn * 5 = 500M check-ins per day
+ 500M/ 10^5 = 5000 check-ins per second
+
+2. Nearby Search Volume
+Assume each user opens app 5x/day → 500M nearby searches/day
+500M/10^5 = 5000 searches per second
+
+Storage requirements:
+a. Places
+Avg place record: 1 KB → 200M × 1KB = ~200 GB
+
+API:
+GET /locations/nearby?lat=12.93&lng=77.62&radius=500&limit=20
+[
+  {
+    "place_id": "abc123",
+    "name": "Cafe Coffee Day",
+    "category": "Cafe",
+    "coordinates": { "lat": 12.9332, "lng": 77.6201 },
+    "rating": 4.2,
+    "check_in_count": 9843
+  }
+]
+
+GET /locations/{place_id}
+
+POST /places/batch-upload
+Content-Type: application/json
+
+[
+  {
+    "name": "Starbucks Indiranagar",
+    "category": "Cafe",
+    "address": "100 Feet Road, Bangalore",
+    "coordinates": { "lat": 12.9716, "lng": 77.5946 },
+    "contact_info": "+91-1234567890",
+    "hours": {
+      "mon": ["09:00", "21:00"],
+      "tue": ["09:00", "21:00"],
+      "sun": []
+    }
+  },
+  ...
+]
+
+POST /checkins
+Authorization: Bearer <token>
+
+GET /users/me/checkins?start=2024-01-01&end=2024-01-31
+Authorization: Bearer <token>
+
+a. Top Categories by Check-ins
+GET /reports/top-categories?period=daily&date=2025-05-10&limit=10
+b. Top Places by Check-ins Within Category
+GET /reports/top-places?category=Cafe&period=weekly&start=2025-05-01
+c. Top Rated Places Within Category
+GET /reports/top-rated?category=Park&limit=5
+
+DB Schema:
+1. User
+   - user_id (PK)
+   - name
+   - email
+   - password_hash
+   - created_at
+
+2. Place
+   - place_id (PK)
+   - name
+   - category
+   - coordinates (lat, lng)
+   - address
+   - contact_info
+   - hours (JSON)
+   - created_at
+
+3. CheckIn
+   - checkin_id (PK)
+   - user_id (FK)
+   - place_id (FK)
+   - rating
+   - comment
+   - duration
+   - created_at
+
+
+

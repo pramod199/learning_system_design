@@ -1,0 +1,146 @@
+// Core domain models, repositories, services, and a simple demo runner
+// using a layered architecture with design patterns (Builder, Service, Repository).
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.*;
+
+// --- DOMAIN ---
+class Supplier {
+    UUID id;
+    String name;
+    String email;
+    String passwordHash;
+    LocalDateTime createdAt;
+    List<Product> products = new ArrayList<>();
+
+    public Supplier(UUID id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.createdAt = LocalDateTime.now();
+    }
+}
+
+class Category {
+    UUID id;
+    String name;
+    Category parent;
+    List<Category> subcategories = new ArrayList<>();
+
+    public Category(UUID id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+}
+
+class Product {
+    UUID id;
+    String name;
+    String description;
+    BigDecimal price;
+    Supplier supplier;
+    Category category;
+    LocalDateTime createdAt;
+    List<ProductVariant> variants = new ArrayList<>();
+
+    public Product(UUID id, String name, String description, BigDecimal price, Supplier supplier, Category category) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.supplier = supplier;
+        this.category = category;
+        this.createdAt = LocalDateTime.now();
+    }
+}
+
+class ProductVariant {
+    UUID id;
+    String name;
+    String sku;
+    BigDecimal priceOverride;
+    Map<String, String> attributes;
+    Inventory inventory;
+
+    public ProductVariant(UUID id, String name, String sku, Map<String, String> attributes, BigDecimal priceOverride) {
+        this.id = id;
+        this.name = name;
+        this.sku = sku;
+        this.attributes = attributes;
+        this.priceOverride = priceOverride;
+        this.inventory = new Inventory(UUID.randomUUID(), 0);
+    }
+}
+
+class Inventory {
+    UUID id;
+    int quantity;
+    LocalDateTime lastUpdated;
+
+    public Inventory(UUID id, int quantity) {
+        this.id = id;
+        this.quantity = quantity;
+        this.lastUpdated = LocalDateTime.now();
+    }
+
+    public void updateQuantity(int qty) {
+        this.quantity = qty;
+        this.lastUpdated = LocalDateTime.now();
+    }
+}
+
+// --- SERVICE LAYER ---
+class ProductService {
+    private ProductRepository productRepo;
+
+    public ProductService(ProductRepository productRepo) {
+        this.productRepo = productRepo;
+    }
+
+    public Product createProduct(String name, String description, BigDecimal price, Supplier supplier, Category category) {
+        Product product = new Product(UUID.randomUUID(), name, description, price, supplier, category);
+        supplier.products.add(product);
+        return productRepo.save(product);
+    }
+}
+
+// --- REPOSITORY LAYER ---
+interface ProductRepository {
+    Product save(Product product);
+    Optional<Product> findById(UUID id);
+}
+
+class InMemoryProductRepository implements ProductRepository {
+    private Map<UUID, Product> store = new HashMap<>();
+
+    public Product save(Product product) {
+        store.put(product.id, product);
+        return product;
+    }
+
+    public Optional<Product> findById(UUID id) {
+        return Optional.ofNullable(store.get(id));
+    }
+}
+
+// --- DEMO RUNNER ---
+public class SupplierEcommerceDemo {
+    public static void main(String[] args) {
+        Supplier supplier = new Supplier(UUID.randomUUID(), "Supplier A", "a@supplier.com");
+        Category category = new Category(UUID.randomUUID(), "Footwear");
+
+        ProductRepository productRepo = new InMemoryProductRepository();
+        ProductService productService = new ProductService(productRepo);
+
+        Product product = productService.createProduct(
+            "Nike Pegasus",
+            "High performance running shoes",
+            BigDecimal.valueOf(4999),
+            supplier,
+            category
+        );
+
+        System.out.println("Product Created: " + product.name + " by Supplier: " + product.supplier.name);
+    }
+}

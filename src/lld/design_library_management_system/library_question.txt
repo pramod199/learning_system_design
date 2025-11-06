@@ -1,0 +1,214 @@
+Each Book can have multiple copies (BookItems).
+
+Each Book can have multiple Authors.
+
+Books belong to different BookTypes (e.g., Fiction, Non-Fiction).
+
+BookItems have different Formats (e.g., eCopy, Hardcover).
+
+Users can search books by title or subject.
+
+Users can issue books.
+
+
+DB design:
+CREATE TABLE User (
+    id VARCHAR(255) PRIMARY KEY,
+    userId VARCHAR(255) UNIQUE NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    phone VARCHAR(20),
+    address TEXT
+);
+
+CREATE TABLE Book (
+    id VARCHAR(255) PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    subject VARCHAR(255),
+    bookType VARCHAR(50) NOT NULL -- Enum for BookType
+);
+
+CREATE TABLE Author (
+    id VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Book_Author (
+    book_id VARCHAR(255),
+    author_id VARCHAR(255),
+    PRIMARY KEY (book_id, author_id),
+    FOREIGN KEY (book_id) REFERENCES Book(id) ON DELETE CASCADE,
+    FOREIGN KEY (author_id) REFERENCES Author(id) ON DELETE CASCADE
+);
+
+CREATE TABLE BookItem (
+    id VARCHAR(255) PRIMARY KEY,
+    bookId VARCHAR(255),
+    format VARCHAR(50) NOT NULL, -- Enum for Format
+    status VARCHAR(50) NOT NULL, -- Enum for Status
+    barcode VARCHAR(255) UNIQUE NOT NULL,
+    publicationDate DATE,
+    rackLocationId VARCHAR(255),
+    FOREIGN KEY (bookId) REFERENCES Book(id) ON DELETE CASCADE,
+    FOREIGN KEY (rackLocationId) REFERENCES Rack(id) ON DELETE SET NULL
+);
+
+CREATE TABLE Rack (
+    id VARCHAR(255) PRIMARY KEY,
+    locationCode VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE User_BookItem (
+    user_id VARCHAR(255),
+    bookItem_id VARCHAR(255),
+    issueDate DATE,
+    returnDate DATE,
+    PRIMARY KEY (user_id, bookItem_id),
+    FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
+    FOREIGN KEY (bookItem_id) REFERENCES BookItem(id) ON DELETE CASCADE
+);
+
+API design:
+
+POST /books -> addBook
+{
+    "title": "string",
+    "subject": "string",
+    "bookType": "string",
+    "authorIds": ["author1", "author2"],
+}
+
+{
+  "message": "Book added successfully",
+  "bookId": "book1"
+}
+
+GET /books/{id} - Get details of a specific book.
+PUT /books/{id} - Update details of a specific bo
+DELETE /books/{id} - Delete a specific book.
+
+
+POST /bookItems -> addBookItem
+{
+    "bookId": "string",
+    "format": "string",
+    "status": "string",
+    "barcode": "string",
+    "publicationDate": "date",
+    "rackLocationId": "string"
+}
+
+{
+  "message": "BookItem added successfully",
+  "bookItemId": "bookItem1"
+}
+GET /books/search?title=The Great Gatsby
+[
+  {
+    "bookId": "book1",
+    "ISBN": "978-3-16-148410-0",
+    "title": "The Great Gatsby",
+    "subject": "Fiction",
+    "authors": ["F. Scott Fitzgerald"],
+    "bookType": "FICTION"
+  }
+]
+
+POST /users/{userId}/issue
+{
+  "bookItemId": "bookItem1",
+  "issueDate": "2023-10-01",
+  "returnDate": "2023-10-15"
+}
+{
+  "message": "BookItem issued successfully",
+  "userId": "user1",
+  "bookItemId": "bookItem1"
+}
+
+POST /users
+{
+  "userId": "user1",
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "phone": "1234567890",
+  "address": "123 Main St, Cityville"
+}
+
+
+Class: User
+- Attributes:
+  - id: String
+  - userId: String
+  - name: String
+  - email: String
+  - phone: String
+  - address: String
+- Methods:
+  - createUser()
+  - updateUser()
+  - deleteUser()
+  - getUserDetails()
+
+Class: Book
+- Attributes:
+  - id: String
+  - title: String
+  - subject: String
+  - bookType: String
+  - authors: List<Author>
+- Methods:
+  - addBook()
+  - updateBook()
+  - deleteBook()
+  - getBookDetails()
+  - searchBooksByTitle()
+  - searchBooksBySubject()
+
+Class: Author
+- Attributes:
+  - id: String
+  - name: String
+- Methods:
+  - addAuthor()
+  - updateAuthor()
+  - deleteAuthor()
+  - getAuthorDetails()
+
+Class: BookItem
+- Attributes:
+  - id: String
+  - book: Book
+  - format: String
+  - status: String
+  - barcode: String
+  - publicationDate: Date
+  - rackLocation: Rack
+- Methods:
+  - addBookItem()
+  - updateBookItem()
+  - deleteBookItem()
+  - getBookItemDetails()
+
+Class: Rack
+- Attributes:
+  - id: String
+  - locationCode: String
+- Methods:
+  - addRack()
+  - updateRack()
+  - deleteRack()
+  - getRackDetails()
+
+Class: BookIssueDetail
+- Attributes:
+  - bookItem: BookItem
+  - user: User
+  - startDate: Date
+  - dueDate: Date
+  - returnDate: Date
+- Methods:
+  - issueBook()
+  - renewBook()
+  - returnBook()
+

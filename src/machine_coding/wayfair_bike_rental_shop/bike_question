@@ -1,0 +1,271 @@
+https://leetcode.com/discuss/post/4503513/wayfair-l2-l4-virual-onsite-lld-bike-ren-jn46/
+
+Bike Rental Shop
+
+you have been hired by a bike shop to create software to help them with their rental operation. this includes automating
+activities such as keeping track of inventory, customers, stock items that are rented, customer fees acrual etc ..
+The store rents two types of products: Bikes and Scooters. Each bike is made in one of three different sizes,
+small, medium and large and will fit small, medium and large humans respectively. We'd like to be sure our customers get
+a bike that fits them and will need to track size of our bikes.
+the scooter are available in electric motor or gas motor styles. the styles of scooters are very different so we want to track them
+separately so we can match our customers with the right scooter.
+
+Required queries:
+How many small bikes do you have?
+what products are there for rents?
+Does this customer have a balance?(aks owe us money)
+What products are rented?
+Are there products that are overdue for return? who has them?
+what product has customer rented?
+
+Required commands:
+Add product to inventory.
+Add a customer
+Remove a product from inventory(permanently not for rental i.e its been damaged)
+Create a charge for customer
+
+Deliverable:
+Can include but not limited to:
+Api specs
+Class diagram
+Schema diagram
+Sequence diagram
+
+Cross questions:
+1. what are rental duration model?
+    – Hourly, daily, weekly rentals? Are there discounts for longer durations?
+2. Are rentals returned to the same shop, or can they be returned anywhere?
+    – Important if the shop has multiple branches.
+3. Do customers pre-book bikes/scooters or only rent on the spot?
+   – If yes, we need a reservation system.
+4. Are there different pricing schemes for bikes and scooters?
+– Is price based on vehicle type, size, duration, etc.?
+5. Can a customer rent multiple products at once?
+– Affects how we design rental entities.
+6. Do we track rental history for customers?
+   – Useful for invoices, penalties, loyalty points, etc.
+7. Should the system handle concurrency?
+   – e.g., two people trying to rent the same bike at once.
+
+
+DB schema:
+City (
+  id INT PK,
+  name VARCHAR UNIQUE NOT NULL
+)
+
+
+Shop (
+    id INT PK,
+    name VARCHAR,
+    address TEXT,
+    phone VARCHAR
+    city_id INT FK → City(id)
+)
+
+Customer (
+  id INT PK,
+  name VARCHAR,
+  phone_number VARCHAR UNIQUE NOT NULL,
+  email VARCHAR,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+
+/*
+class table inheritance
+
+other is single table inheritance */
+
+
+Vehicle (
+  id INT PK,
+  type ENUM('BIKE', 'SCOOTER', 'CAR'),
+  status ENUM('AVAILABLE', 'RENTED', 'RESERVED', 'DAMAGED', 'MAINTENANCE'),
+  shop_id INT FK → Shop(id),
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+
+Bike (
+  vehicle_id INT PK FK → Vehicle(id),
+  size ENUM('SMALL', 'MEDIUM', 'LARGE'),
+  brand VARCHAR
+)
+
+Scooter (
+  vehicle_id INT PK FK → Vehicle(id),
+  motor_type ENUM('ELECTRIC', 'GAS'),
+  brand VARCHAR
+)
+
+Rental (
+  id INT PK,
+  customer_id INT FK → Customer(id),
+  vehicle_id INT FK → Vehicle(id),
+  start_date DATETIME,
+  end_date DATETIME,
+  total_amount DECIMAL,
+  status ENUM('ACTIVE', 'COMPLETED', 'CANCELLED'),
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+
+Reservation (
+  id INT PK,
+  customer_id INT FK → Customer(id),
+  vehicle_id INT FK → Vehicle(id),
+  reserved_from DATETIME,
+  reserved_to DATETIME,
+  status ENUM('ACTIVE', 'CANCELLED', 'FULFILLED'),
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+
+Rental_Charge (
+  id INT PK,
+  rental_id INT FK → Rental(id),
+  amount DECIMAL,
+  description VARCHAR,
+  status ENUM('PAID', 'UNPAID'),
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+
+Pricing (
+  id INT PK,
+  vehicle_type ENUM('BIKE', 'SCOOTER', 'CAR'),
+  size ENUM('SMALL', 'MEDIUM', 'LARGE') NULL,    -- For bikes
+  style ENUM('GAS', 'ELECTRIC') NULL,            -- For scooters
+  fuel_type ENUM('PETROL', 'DIESEL', 'ELECTRIC') NULL, -- For cars
+  price_per_day DECIMAL,
+  effective_from DATE
+)
+
+
+
+API Specs:
+
+Add product to inventory.
+POST /api/vehicles
+{
+  "type": "BIKE",
+  "shopId": 1,
+  "status": "AVAILABLE", // can be added directly
+  "bikeDetails": {
+    "size": "MEDIUM",
+    "brand": "Hero"
+  }
+}
+
+{
+  "type": "SCOOTER",
+  "shopId": 1,
+  "status": "AVAILABLE",
+  "scooterDetails": {
+    "style": "ELECTRIC",
+    "brand": "Ola"
+  }
+}
+response:
+{
+  "vehicleId": 101,
+  "message": "Vehicle added successfully"
+}
+
+POST /api/customers
+{
+  "name": "Pramod",
+  "phoneNumber": "9876543210",
+  "email": "pramod@example.com",
+  "size": "MEDIUM"
+}
+response:
+{
+  "customerId": 201,
+  "message": "Customer created successfully"
+}
+
+DELETE  /api/vehicles/{vehicleId}
+
+{
+  "message": "Vehicle removed successfully"
+}
+
+POST /api/reservations
+{
+  "customerId": 201,
+  "vehicleId": 101,
+  "startTime": "2025-05-10T09:00:00",
+  "endTime": "2025-05-11T09:00:00"
+}
+
+{
+  "reservationId": 501,
+  "vehicleId": 101,
+  "customerId": 201,
+  "totalAmount": 400.00,
+  "message": "Reservation created successfully"
+}
+
+
+POST /api/rentals
+{
+  "customerId": 201,
+  "vehicleId": 101,
+  "startTime": "2025-05-08T10:00:00",
+  "endTime": "2025-05-10T10:00:00"
+}
+
+response:
+{
+  "rentalId": 301,
+  "totalAmount": 600.00,
+  "message": "Rental created successfully"
+}
+
+/*
+check vehicle availability
+
+check customer-bike size match (if applicable)
+
+calculate totalAmount from pricing
+
+set vehicle status = RENTED_
+*/
+
+POST /api/charges
+{
+  "customerId": 201,
+  "rentalId": 301,
+  "amount": 150.00,
+  "reason": "Late return"
+}
+
+{
+  "chargeId": 401,
+  "message": "Charge created successfully"
+}
+
+GET /api/vehicles?shopId=1&type=BIKE&size=MEDIUM
+[
+  {
+    "vehicleId": 101,
+    "type": "BIKE",
+    "status": "AVAILABLE",
+    "bikeDetails": {
+      "size": "MEDIUM",
+      "brand": "Hero"
+    }
+  },
+  {
+    "vehicleId": 102,
+    "type": "BIKE",
+    "status": "AVAILABLE",
+    "bikeDetails": {
+      "size": "MEDIUM",
+      "brand": "Trek"
+    }
+  }
+]
+
+
+
+Add a customer
+Remove a product from inventory(permanently not for rental i.e its benn damaged)
+Create a charge for customer

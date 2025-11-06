@@ -1,0 +1,195 @@
+https://leetcode.com/discuss/post/4503513/wayfair-l2-l4-virual-onsite-lld-bike-ren-jn46/
+
+Design a Parking Lot
+Some things to call out in the requirement
+No need to consider payments
+No agent intervention
+No need to consider how the nearest parking lot will be determined
+There was no concept of Entry and Entrance there will be automated lifts that moves the car to the parking spot and then returns it back
+Provide the classes and the model entity -> interviewer looked satisfied and the interview ended 5 mins early
+
+Design Parking Lot (with API and DB schema design, SQL query was asked to count no of vehicles of currently parked in this parking lot)
+you have to design a simple parking lot where no concept of floors. It is machine operated like below image.
+User gives his car at parking entrance and handed over with a ticket and machine parks his car.
+
+QUESTIONS:
+
+What is the total capacity of the parking lot? is it fixed or can expanded over time?
+Do we need to handle different vehicle types (cars, bikes, trucks) with different space requirements?
+Is every parking spot the same, or are there different types (compact, standard, electric, etc.)?
+Do we have floors?
+Do we have different pricing structures for different vehicle types or parking spots? is it hourly or daily?
+
+
+Machine Operations:
+Is the machine responsible for choosing the parking spot automatically?
+Do users ever interact with the parked car directly, or only through machine (e.g., via ticket)?
+
+Exit Process
+Is there any payment involved, or is this out of scope?
+
+Ticket System: What information should the ticket contain? Just an ID or more details?
+Availability Display: Should the system show available spaces at the entrance?
+
+DB design:
+
+parking_slots (
+    id SERIAL PRIMARY KEY,
+    slot_type VARCHAR(20) NOT NULL, -- e.g., 'compact', 'standard', 'electric'
+    is_occupied BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+
+tickets (
+    id SERIAL PRIMARY KEY,
+    slot_id INTEGER NOT NULL REFERENCES parking_slots(id),
+    vehicle_license_no VARCHAR(20) NOT NULL,
+    vehicle_type VARCHAR(10) NOT NULL, -- e.g., 'car', 'bike', 'truck'
+    entry_time TIMESTAMP DEFAULT NOW(),
+    exit_time TIMESTAMP
+);
+
+pricing_rules (
+    id SERIAL PRIMARY KEY,
+    vehicle_type VARCHAR(10) NOT NULL,
+    slot_type VARCHAR(20) NOT NULL,
+    rate NUMERIC(6,2) NOT NULL
+    pricing_model VARCHAR(20) NOT NULL, -- e.g., 'hourly', 'daily', 'weekly'
+);
+
+SELECT count(*) from parking_slots where is_occupied = true;
+SELECT vehicle_type, COUNT(*) FROM tickets WHERE exit_time IS NULL GROUP BY vehicle_type;
+
+API design:
+POST /park
+
+Request Body:
+{
+    "vehicle_license_no": "ABC123",
+    "vehicle_type": "car"
+}
+
+Response:
+{
+  "ticket_id": 101,
+  "slot_id": 12,
+  "entry_time": "2025-05-07T11:03:00Z"
+}
+
+POST /unpark
+Request Body:
+{
+    "ticket_id": 101
+}
+
+{
+  "message": "Vehicle unparked successfully",
+  "exit_time": "2025-05-07T13:45:00Z",
+  "duration_minutes": 162,
+  "pricing_model": "hourly",
+    "rate_per_unit": 20.0,
+    "units": 3,
+    "total_fee": 60.0
+}
+
+
+GET /slots/status
+Returns occupancy by slot type.
+
+
+[
+  {
+    "slot_type": "compact",
+    "total": 50,
+    "occupied": 45,
+    "free": 5
+  },
+  {
+    "slot_type": "standard",
+    "total": 40,
+    "occupied": 33,
+    "free": 7
+  }
+]
+
+SELECT
+  slot_type_id,
+  COUNT(*) AS total,
+  COUNT(*) FILTER (WHERE is_occupied) AS occupied,
+  COUNT(*) FILTER (WHERE NOT is_occupied) AS free
+FROM parking_slots
+GROUP BY slot_type_id;
+
+GET /vehicles/parked
+Returns list or count of currently parked vehicles.
+
+POST /slots : used by admin
+
+Request Body:
+{
+    "slot_type": "compact",
+}
+
+GET /tickets
+Optionally filter by date, vehicle, etc.
+
+
++-----------------------+
+|     ParkingLot        |        <-- Singleton
++-----------------------+
+| - slots: List<Slot>   |
+| - tickets: Map<Integer, Ticket> |
+| + parkVehicle(vehicle): Ticket |
+| + unparkVehicle(ticketId): Receipt |
++-----------------------+
+
++----------------+
+|     Slot       |
++----------------+
+| id             |
+| slotType       |
+| isOccupied     |
++----------------+
+
++----------------+
+|    Vehicle     |
++----------------+
+| licenseNumber  |
+| vehicleType    |
++----------------+
+
++----------------+
+|    Ticket      |
++----------------+
+| id             |
+| slot           |
+| vehicle        |
+| entryTime      |
+| exitTime       |
+| pricingModel   |
++----------------+
+
++------------------+
+|    Receipt       |
++------------------+
+| ticketId         |
+| exitTime         |
+| totalFee         |
+| ratePerUnit      |
+| pricingModel     |
++------------------+
+
++---------------------------+
+|     PricingStrategy       |   <-- Interface
++---------------------------+
+| + calculateFee(...)       |
++---------------------------+
+
++---------------------------+
+|   HourlyPricingStrategy   |
++---------------------------+
+
++---------------------------+
+|   DailyPricingStrategy    |
++---------------------------+
