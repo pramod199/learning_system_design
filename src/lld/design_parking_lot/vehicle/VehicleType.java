@@ -1,4 +1,4 @@
-package lld.design_parking_lot;
+package lld.design_parking_lot.vehicle;
 
 public enum VehicleType {
     CAR,
