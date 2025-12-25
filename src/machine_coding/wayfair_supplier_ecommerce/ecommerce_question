@@ -141,7 +141,7 @@ POST /api/category
 Request Body:
 {
     "name": "Electronics",
-    "parentId": null // for top-level categories
+    "parentId": null // for top-parkingFloor categories
 }
 
 GET /api/categories -> used by admin

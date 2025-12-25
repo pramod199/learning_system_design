@@ -2,7 +2,7 @@ Hotel reservation platform with multiple hotel providers.
 
 1. who are the users of this platform? (e.g., customers, hotel providers, admins)
 2. Do hotel providers manage their listings via our platform or via an external API? our platform.
-3. Should the platform support room-level availability and pricing per night? yes
+3. Should the platform support room-parkingFloor availability and pricing per night? yes
 4. What kind of search and filters should be supported? (e.g., location, price range, amenities, star rating)
     -> location and price range for now, but should be extensible
 5. How will be the payment -> can be cash, card,upi
