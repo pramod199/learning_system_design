@@ -16,6 +16,18 @@ public class SlidingWindowRateLimiter implements RateLimiter {
 
     }
 
+    /*
+     * - Maintain a queue/deque of all request timestamps
+     * - On each request:
+     *   1. Remove timestamps older than (currentTime - windowSize)
+     *   2. If remaining count < limit: allow and add timestamp
+     *   3. Else: reject
+     *
+     * * Why Deque?
+     * - FIFO structure (oldest timestamps removed first)
+     * - Efficient removal from front: O(1)
+     * - Efficient addition to back: O(1)
+     */
     @Override
     public synchronized boolean allowRequest(String userId) {
         long currentTime = System.currentTimeMillis();

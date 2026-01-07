@@ -20,7 +20,7 @@ public class FixedWindowRateLimiter implements RateLimiter {
         long currentTime = System.currentTimeMillis();
         if (currentTime - windowStart >= windowSizeMillis) {
             requestCounts.remove(userId);
-            windowStart = currentTime;
+            windowStart = currentTime; // reset the window
         }
         requestCounts.put(userId, requestCounts.getOrDefault(userId, 0)+1);
         return requestCounts.get(userId) <= maxRequests;

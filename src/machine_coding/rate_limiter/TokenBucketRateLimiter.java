@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class TokenBucketRateLimiter implements RateLimiter {
     private final int capacity;
-    private final double refillRate;
+    private final double refillRate; // per second
     private final Map<String, Integer> tokens = new ConcurrentHashMap<>();
     private final Map<String, Long> lastRefillTimestamp = new ConcurrentHashMap<>();
 
@@ -13,12 +13,22 @@ public class TokenBucketRateLimiter implements RateLimiter {
         this.capacity = capacity;
         this.refillRate = refillRate;
     }
-
+/*
+ * Algorithm:
+ * - Bucket holds tokens (capacity = max tokens)
+ * - Tokens are added at constant rate (refill rate)
+ * - Each request consumes 1 token
+ * - If tokens available: allow request and decrement
+ * - If no tokens: reject request
+ * - Bucket never exceeds capacity
+ */
     @Override
     public synchronized boolean allowRequest(String userId) {
         long currentTime = System.currentTimeMillis();
+
         lastRefillTimestamp.putIfAbsent(userId, currentTime);
         tokens.putIfAbsent(userId, capacity);
+
         long lastRefill = lastRefillTimestamp.get(userId);
         long elapsedTime = (currentTime - lastRefill) / 1000;
         if (elapsedTime > 0) {

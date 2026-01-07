@@ -1,0 +1,35 @@
+Functional Requirement:
+1. Configurable rate limits
+ rate limit consists of:
+ userId, maxRequests, timeWindow (in seconds), rateLimitAlgorithm
+2. Support multiple rate limiting algorithms
+    - Fixed Window: counter based approach- a simple counter that reset after every time window
+    - Sliding Window: log based approach- maintain  a log of request and checks how many occured in last x minutes
+    - Token Bucket: Request consume tokens from a bucket that refills at a fixed rate,
+     burst traffic is allowed if tokens are available.
+    - Leaky Bucket: Queue-based, steady outflow of requests at a constant rate, preventing sudden outburst.
+3. Request Handling:
+    allows request if within limit otherwise reject with error message
+
+Non-Functional Requirements:
+1. High Performance: low latency
+2.Extensibility: easily add new algorithms
+3. Thread Safety: handle concurrent requests correctly
+
+Identifying Key classes:
+
+1. RateLimiter(Interface): contract for all rate limiting algorithms
+   - allowRequest(userId): boolean
+2. RateLimiterImplementations:
+   - FixedWindowRateLimiter:
+   - SlidingWindowRateLimiter
+   - TokenBucketRateLimiter
+   - LeakyBucketRateLimiter
+
+3. RateLimiterFactory:
+   - createRateLimiter(algorithmType, maxRequests, timeWindow): RateLimiter
+4. RateLimiterService:
+    - handleRequest(userId): boolean
+    - manage user-specific configuration.
+5. Main Application:
+   - Demonstrates usage of RateLimiterService
