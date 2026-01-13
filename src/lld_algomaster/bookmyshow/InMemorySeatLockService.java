@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 class InMemorySeatLockService implements SeatLockService {
     // Map<showId, Map<showSeatId, SeatLock>>
-    private final Map<String, Map<String, SeatLock>> locks = new HashMap<>();
+    private final Map<String, Map<String, SeatLock>> locks = new HashMap<>(); // show -> Map<SeatId, seatLock>
     private final int LOCK_TIMEOUT_SECONDS = 300; // 5 minutes
 
     @Override

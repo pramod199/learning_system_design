@@ -14,4 +14,5 @@ public class LRUCacheDemo {
         
         System.out.println(cache.get("b")); // null
     }
+
 }

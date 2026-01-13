@@ -1,0 +1,12 @@
+https://medium.com/@rickymondal/system-design-inmemory-key-value-with-transaction-0a6df97ccce1
+
+What operations are required?
+    GET(key)
+    SET(key, value)
+    DELETE(key)
+    BEGIN
+    COMMIT
+    ROLLBACK
+
+
+

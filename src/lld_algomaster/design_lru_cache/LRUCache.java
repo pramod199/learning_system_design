@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class LRUCache<K, V> {
     private final int capacity;
-    private final Map<K, Node<K,V>> map;
-    private final DoublyLinkedList<K,V> dll;
+    private final Map<K, Node<K, V>> map;
+    private final DoublyLinkedList<K, V> dll;
 
     public LRUCache(int capacity) {
         this.capacity = capacity;
@@ -43,7 +43,6 @@ public class LRUCache<K, V> {
         dll.remove(node);
         map.remove(key);
     }
-
 
 
 }
