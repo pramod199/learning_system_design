@@ -1,4 +1,6 @@
-Design a Document Upload Service that allows users to upload, retrieve, delete, and list their documents in a cloud storage solution. Define the database schema for your service. Include tables for storing user information, document metadata, and any other necessary data. Consider relationships between tables and indexing for efficient data retrieval.
+Design a Document Upload Service that allows users to upload, retrieve, delete, and list their documents in a cloud storage solution.
+Define the database schema for your service. Include tables for storing user information, document metadata, and any other necessary data.
+Consider relationships between tables and indexing for efficient data retrieval.
 
 
 Design a class diagram to represent the core components of your service, including:
