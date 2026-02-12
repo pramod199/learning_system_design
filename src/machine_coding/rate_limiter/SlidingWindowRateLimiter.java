@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SlidingWindowRateLimiter implements RateLimiter {
     private final int maxRequests;
     private final long windowSizeMillis;
-    private final Map<String, Deque<Long>> requestLogs = new ConcurrentHashMap<>();
+    private final Map<String, Deque<Long>> requestLogs = new ConcurrentHashMap<>(); // userId vs deque of timestamps
 
     public SlidingWindowRateLimiter(int maxRequests, long windowSizeMillis) {
         this.maxRequests = maxRequests;
@@ -33,7 +33,7 @@ public class SlidingWindowRateLimiter implements RateLimiter {
         long currentTime = System.currentTimeMillis();
         requestLogs.putIfAbsent(userId, new LinkedList<>());
         Deque<Long> timestamps = requestLogs.get(userId);
-        while (!timestamps.isEmpty() && currentTime - timestamps.peek() >= windowSizeMillis) {
+        while (!timestamps.isEmpty() && currentTime - timestamps.peekFirst() >= windowSizeMillis) {
             timestamps.pollFirst();
         }
         if (timestamps.size() < maxRequests) {

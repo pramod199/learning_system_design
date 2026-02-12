@@ -1,4 +1,4 @@
-package machine_coding.uber.meeting_schedular;
+package machine_coding.uber.meeting_schedular.assign_room;
 
 import java.util.Collection;
 import java.util.Map;
