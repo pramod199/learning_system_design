@@ -50,7 +50,7 @@ public class PubSubService {
         System.out.println("Publishing message to topic: " + topicName);
         Topic topic = topicRegistry.get(topicName);
         if (topic == null) throw new IllegalArgumentException("Topic not found: " + topicName);
-        topic.broadcast(message);
+        topic.publish(message);
     }
 
     public void shutdown() {

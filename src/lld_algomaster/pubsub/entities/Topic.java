@@ -31,7 +31,7 @@ public class Topic {
     }
 
     // can be named as publish
-    public void broadcast(Message message) {
+    public void publish(Message message) {
         for (Subscriber subscriber : subscribers) {
             deliveryExecutor.submit(() -> {
                 try {
