@@ -1,0 +1,39 @@
+Candidate: "Should the scheduler support only one-time tasks, or recurring tasks as well?"
+Interviewer: "Both. One-time tasks run at a specific future time, and recurring tasks run repeatedly at a fixed interval."
+
+Should recurring tasks be fixed-rate or fixed-delay?
+Why it matters:
+fixed-rate → cron style
+fixed-delay → after previous finishes
+
+Candidate: "Should tasks be executed exactly on time, or is a small delay acceptable?"
+Interviewer: "A small delay is acceptable. We're not aiming for real-time precision, but tasks should execute as close as possible to the scheduled time. "
+
+Candidate: "Can a task have dependencies, such that one task should only start after another completes?"
+
+Interviewer: "yes"
+Should dependent tasks start immediately after the parent finishes, or still respect their scheduled time?
+Model A — schedule + dependency: run at 10:00 AND after parent
+Model B — only after parent
+Dependencies form a DAG (no cycles) - cyclic dependencies
+
+Candidate: "What should happen if a task throws an exception during execution?"
+Interviewer: "The exception should be caught and reported, but it should not crash the worker thread or block other tasks."
+
+Candidate: "Can multiple tasks run in parallel?"
+Interviewer: "Yes. The system should be able to run multiple tasks concurrently using a configurable number of worker threads."
+
+Candidate: "Should we support task cancellation?"
+Interviewer: "Yes, a scheduled task should be cancellable before it executes."
+
+Candidate: "Should the scheduler support retries if a task fails?"
+Interviewer: "No retries for now. However, you can keep the design open to supporting retries later."
+
+APi:
+schedule(task)
+scheduleRecurring(task)
+scheduleAfter(task, dependency)
+cancel(taskId)
+getStatus(taskId) - (important for dependency)
+shutdown()
+

@@ -7,7 +7,7 @@ import java.util.TreeMap;
 
 public class BookingService {
     TreeMap<String, Room> rooms = new TreeMap<>(); // to ensure lexicographically assignment of room
-    Map<String, Booking> bookings = new HashMap<>(); // need for cancellation, global booking lookup
+    Map<String, Booking> bookings = new HashMap<>(); // need for cancellation, global booking lookup, bookingId vs booking
 
     public BookingService(List<String> roomIds) {
         for (String roomId : roomIds) {
